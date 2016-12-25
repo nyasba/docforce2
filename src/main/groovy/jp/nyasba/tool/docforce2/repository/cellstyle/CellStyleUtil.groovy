@@ -1,0 +1,60 @@
+package jp.nyasba.tool.docforce2.repository.cellstyle
+
+import org.apache.poi.ss.usermodel.CellStyle
+import org.apache.poi.ss.usermodel.Workbook
+
+/**
+ * セルのスタイルを作成するUtil
+ */
+class CellStyleUtil {
+
+    def static CellStyle normal(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ()
+                .縦位置中央()
+                .罫線で囲む()
+                .改行OK()
+                .build()
+    }
+
+    def static CellStyle inactive(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ()
+                .縦位置中央()
+                .罫線で囲む()
+                .改行OK()
+                .背景を網掛け()
+                .build()
+    }
+    
+    def static CellStyle alignCenter(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ()
+                .縦位置中央()
+                .罫線で囲む()
+                .改行OK()
+                .中央揃え()
+                .build()
+    }
+    
+    def static CellStyle title(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ(36)
+                .縦位置中央()
+                .罫線なし()
+                .改行NG()
+                .中央揃え()
+                .build()
+    }
+    
+    def static CellStyle titleDate(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ(18)
+                .縦位置中央()
+                .罫線なし()
+                .改行NG()
+                .右揃え()
+                .build()
+    }
+    
+}
