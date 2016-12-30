@@ -80,6 +80,14 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>ApprovedDataTime__c</fullName>
+        <externalId>false</externalId>
+        <label>承認完了日</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
         <fullName>DaysOfTravel__c</fullName>
         <externalId>false</externalId>
         <formula>TravelEndDate__c  -  TravelStartDate__c + 1</formula>

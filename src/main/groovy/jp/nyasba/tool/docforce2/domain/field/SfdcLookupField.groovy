@@ -35,7 +35,7 @@ class SfdcLookupField implements SfdcField {
 
     @Override
     String デフォルト値or選択リスト値() {
-        return ""
+        return filter()
     }
 
     @Override
@@ -61,5 +61,20 @@ class SfdcLookupField implements SfdcField {
     @Override
     String 説明() {
         return fieldXml.description
+    }
+    
+    def String filter(){
+        if(fieldXml.lookupFilter == null || fieldXml.lookupFilter.active != "true"){
+            return ""
+        }
+        def filterItemMsg = fieldXml.lookupFilter.filterItems.collect { "${it.field} ${convertOprationToFormula(it.operation)} ${it.value}${it.valueField}" }.join("\n")
+        return "[filter]\n" + filterItemMsg
+    }
+    
+    def convertOprationToFormula(def o){
+        switch (o){
+            case "equals" : return "="
+        }
+        return ""
     }
 }
