@@ -1,6 +1,7 @@
 package jp.nyasba.tool.docforce2.domain.field
 
 import groovy.util.slurpersupport.GPathResult
+import jp.nyasba.tool.docforce2.domain.operator.SfdcOperation
 
 /**
  * 参照関係フィールド
@@ -67,14 +68,8 @@ class SfdcLookupField implements SfdcField {
         if(fieldXml.lookupFilter == null || fieldXml.lookupFilter.active != "true"){
             return ""
         }
-        def filterItemMsg = fieldXml.lookupFilter.filterItems.collect { "${it.field} ${convertOprationToFormula(it.operation)} ${it.value}${it.valueField}" }.join("\n")
+        def filterItemMsg = fieldXml.lookupFilter.filterItems.collect { "${it.field} ${SfdcOperation.convert(it.operation)} ${it.value}${it.valueField}" }.join("\n")
         return "[filter]\n" + filterItemMsg
     }
     
-    def convertOprationToFormula(def o){
-        switch (o){
-            case "equals" : return "="
-        }
-        return ""
-    }
 }
