@@ -1,6 +1,8 @@
 package jp.nyasba.tool.docforce2.repository
 
 import jp.nyasba.tool.docforce2.domain.SfdcCustomObject
+import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcess
+import jp.nyasba.tool.docforce2.repository.sheet.ApprovalProcessSheetRepository
 import jp.nyasba.tool.docforce2.repository.sheet.CustomFiledSheetRepository
 import jp.nyasba.tool.docforce2.repository.sheet.ObjectSheetRepository
 import jp.nyasba.tool.docforce2.repository.sheet.TitleSheetRepository
@@ -20,7 +22,10 @@ class ObjectDesignExcelBookRepository {
     private static Path TEMPLATE = Paths.get(ClassLoader.getSystemResource("template/オブジェクト定義書.xlsx").toURI())
 
 
-    def void save(SfdcCustomObject customObject){
+    def void save(
+            SfdcCustomObject customObject,
+            List<SfdcApprovalProcess> approvalProcessList = Collections.emptyList()
+    ){
 
         Path outputFile = outputFilePath(customObject)
         Files.deleteIfExists(outputFile)
@@ -31,6 +36,7 @@ class ObjectDesignExcelBookRepository {
         new ObjectSheetRepository().createSheet(workbook, customObject)
         new CustomFiledSheetRepository().createSheet(workbook, customObject)
         new ValidationSheetRepository().createSheet(workbook, customObject)
+        new ApprovalProcessSheetRepository().createSheet(workbook, approvalProcessList)
 
         saveWorkbook(outputFile, workbook)
     }
