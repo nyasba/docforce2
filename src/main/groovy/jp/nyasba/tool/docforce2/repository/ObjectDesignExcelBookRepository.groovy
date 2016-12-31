@@ -36,7 +36,7 @@ class ObjectDesignExcelBookRepository {
         new ObjectSheetRepository().createSheet(workbook, customObject)
         new CustomFiledSheetRepository().createSheet(workbook, customObject)
         new ValidationSheetRepository().createSheet(workbook, customObject)
-        new ApprovalProcessSheetRepository().createSheet(workbook, approvalProcessList)
+        new ApprovalProcessSheetRepository().createSheets(workbook, approvalProcessList)
 
         saveWorkbook(outputFile, workbook)
     }

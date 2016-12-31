@@ -23,10 +23,13 @@ class CellStyleBuilder {
         return style
     }
 
-    public CellStyleBuilder メイリオ(def point = 11){
+    public CellStyleBuilder メイリオ(int point = 11, List option = []){
         Font font = workbook.createFont()
         font.setFontName("メイリオ")
         font.setFontHeightInPoints(point as short)
+        if(option.contains("bold")){
+            font.setBold(true)
+        }
         style.setFont(font)
         return this
     }

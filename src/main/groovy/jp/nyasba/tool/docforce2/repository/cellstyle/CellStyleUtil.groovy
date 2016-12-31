@@ -57,4 +57,13 @@ class CellStyleUtil {
                 .build()
     }
     
+    def static CellStyle sectionTitle(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ(12, ["bold"])
+                .縦位置中央()
+                .罫線なし()
+                .改行NG()
+                .build()
+    }
+    
 }

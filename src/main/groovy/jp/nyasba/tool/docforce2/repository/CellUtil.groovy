@@ -2,6 +2,7 @@ package jp.nyasba.tool.docforce2.repository
 
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellStyle
+import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.util.CellRangeAddress
 
@@ -36,8 +37,9 @@ class CellUtil {
      * @param style スタイル
      * @return なし
      */
-    def static setValueWithCreateRecord(Sheet sheet, int rowNumber, int colNumber, def value, CellStyle style) {
-        sheet.createRow(rowNumber)
+    def static setValueWithCreateRecord(Sheet sheet, int rowNumber, int colNumber, def value, CellStyle style, float height = -1) {
+        Row row = sheet.createRow(rowNumber)
+        row.setHeightInPoints(height)
         setValue(sheet, rowNumber, colNumber, value, style)
     }
     
