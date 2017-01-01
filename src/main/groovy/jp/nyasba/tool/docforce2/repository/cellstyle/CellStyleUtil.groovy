@@ -66,4 +66,14 @@ class CellStyleUtil {
                 .build()
     }
     
+    def static CellStyle tableHeader(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ(11, ["white"])
+                .縦位置中央()
+                .罫線で囲む()
+                .改行OK()
+                .見出し用背景塗りつぶし()
+                .build()
+    }
+    
 }

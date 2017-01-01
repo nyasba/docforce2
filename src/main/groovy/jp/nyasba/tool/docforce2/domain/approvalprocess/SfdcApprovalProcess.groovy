@@ -55,5 +55,8 @@ class SfdcApprovalProcess {
         return xml.approvalPageFields.field.join("\n")
     }
     
-    
+    def List<SfdcApprovalProcessRequestAction> 申請時のアクションリスト(){
+        return [ SfdcApprovalProcessRequestAction.レコードロック() ]
+        // FIXME 申請時のアクションのタグを調べて追加する
+    }
 }
