@@ -59,4 +59,8 @@ class SfdcApprovalProcess {
         return [ SfdcApprovalProcessRequestAction.レコードロック() ]
         // FIXME 申請時のアクションのタグを調べて追加する
     }
+    
+    def List<SfdcApprovalProcessStep> 承認ステップリスト(){
+        return xml.approvalStep.collect{ new SfdcApprovalProcessStep(it) }
+    }
 }

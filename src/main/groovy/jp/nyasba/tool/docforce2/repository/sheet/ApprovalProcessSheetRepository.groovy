@@ -1,15 +1,12 @@
 package jp.nyasba.tool.docforce2.repository.sheet
 
-import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcessRequestAction
 import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcess
+import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcessRequestAction
+import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcessStep
 import jp.nyasba.tool.docforce2.repository.CellUtil
 import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
 import jp.nyasba.tool.docforce2.repository.cellstyle.RowHeightUtil
-import org.apache.poi.ss.usermodel.CellStyle
-import org.apache.poi.ss.usermodel.PrintSetup
-import org.apache.poi.ss.usermodel.Row
-import org.apache.poi.ss.usermodel.Sheet
-import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.ss.usermodel.*
 
 /**
  * Excelの「承認プロセス」シートを作成するためのRepository
@@ -47,9 +44,10 @@ class ApprovalProcessSheetRepository {
         承認プロセス情報1行(sheet, row++, "承認ページ表示項目", ap.承認ページ表示項目())
     
         row++
-        row = 申請時のアクション(sheet, row, ap.申請時のアクションリスト())
+        row = 申請時のアクション(sheet, row++, ap.申請時のアクションリスト())
         
-        
+        row++
+        row = 承認ステップ(sheet, row++, ap.承認ステップリスト())
         印刷設定(sheet)
     
     }
@@ -70,6 +68,32 @@ class ApprovalProcessSheetRepository {
         actionList.each {
             CellUtil.setValueWithCreateRecord(sheet, row, 0, it.type, normal)
             CellUtil.setValueAndCellsMerged(sheet, row, 1, 2, it.description, normal)
+            row++
+        }
+        return row
+    }
+    
+    def int 承認ステップ(Sheet sheet, int row, List<SfdcApprovalProcessStep> stepList){
+        CellUtil.setValueWithCreateRecord(sheet, row++, 0, "承認ステップ", sectionTitle, 24 as float)
+    
+        sheet.createRow(row)
+        CellUtil.setValue(sheet, row, 0, "ラベル", tableHeader)
+        CellUtil.setValue(sheet, row, 1, "API参照名", tableHeader)
+        CellUtil.setValue(sheet, row, 2, "条件", tableHeader)
+        CellUtil.setValue(sheet, row, 3, "承認割り当て先", tableHeader)
+        CellUtil.setValue(sheet, row, 4, "代理承認", tableHeader)
+        CellUtil.setValue(sheet, row, 5, "却下時の処理", tableHeader)
+        CellUtil.setValue(sheet, row, 6, "説明", tableHeader)
+        row++
+        stepList.each {
+            sheet.createRow(row)
+            CellUtil.setValue(sheet, row, 0, it.ラベル, normal)
+            CellUtil.setValue(sheet, row, 1, it.API参照名, normal)
+            CellUtil.setValue(sheet, row, 2, it.条件, normal)
+            CellUtil.setValue(sheet, row, 3, it.承認割り当て先, normal)
+            CellUtil.setValue(sheet, row, 4, it.代理承認, normal)
+            CellUtil.setValue(sheet, row, 5, it.却下時の処理, normal)
+            CellUtil.setValue(sheet, row, 6, it.説明, normal)
             row++
         }
         return row
