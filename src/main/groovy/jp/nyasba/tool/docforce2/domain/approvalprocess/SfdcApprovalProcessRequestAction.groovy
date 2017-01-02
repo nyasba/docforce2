@@ -1,6 +1,7 @@
 package jp.nyasba.tool.docforce2.domain.approvalprocess
 
 import groovy.util.slurpersupport.NodeChild
+import jp.nyasba.tool.docforce2.domain.workflow.SfdcWorkflowType
 
 /**
  * ApprovalProcessメタデータ中の「申請時のアクション」の読み取り結果
@@ -20,7 +21,11 @@ class SfdcApprovalProcessRequestAction implements SfdcApprovalProcessAction {
         this.name = name
     }
     
-    def static SfdcApprovalProcessRequestAction レコードロック(){
-        return new SfdcApprovalProcessRequestAction("レコードのロック", "")
+    def String getType(){
+        return SfdcWorkflowType.convert(type)
+    }
+    
+    def static SfdcApprovalProcessRequestAction lock(){
+        return new SfdcApprovalProcessRequestAction("lock", "")
     }
 }

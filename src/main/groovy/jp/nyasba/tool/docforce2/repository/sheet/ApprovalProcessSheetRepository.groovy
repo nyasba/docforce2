@@ -66,14 +66,14 @@ class ApprovalProcessSheetRepository {
     }
     
     def int アクションリスト(Sheet sheet, int row, String sectionTile, List<SfdcApprovalProcessAction> actionList){
-        CellUtil.setValueWithCreateRecord(sheet, row++, 0, sectionTile, sectionTitle, 24 as float)
+        CellUtil.setValueWithCreateRecord(sheet, row++, 1, sectionTile, sectionTitle, 24 as float)
     
-        CellUtil.setValueWithCreateRecord(sheet, row, 0, "種別", tableHeader)
-        CellUtil.setValueAndCellsMerged(sheet, row, 1, 2, "説明", tableHeader)
+        CellUtil.setValueWithCreateRecord(sheet, row, 1, "種別", tableHeader)
+        CellUtil.setValueAndCellsMerged(sheet, row, 2, 3, "名前", tableHeader)
         row++
         actionList.each {
-            CellUtil.setValueWithCreateRecord(sheet, row, 0, it.type, normal)
-            CellUtil.setValueAndCellsMerged(sheet, row, 1, 2, it.name, normal)
+            CellUtil.setValueWithCreateRecord(sheet, row, 1, it.type, normal)
+            CellUtil.setValueAndCellsMerged(sheet, row, 2, 3, it.name, normal)
             row++
         }
         return row

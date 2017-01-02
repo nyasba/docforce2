@@ -1,6 +1,7 @@
 package jp.nyasba.tool.docforce2.domain.approvalprocess
 
 import groovy.util.slurpersupport.NodeChild
+import jp.nyasba.tool.docforce2.domain.workflow.SfdcWorkflowType
 
 /**
  * ApprovalProcessメタデータ中の「最終却下時のアクション」の読み取り結果
@@ -20,11 +21,15 @@ class SfdcApprovalProcessFinalRejectionAction implements SfdcApprovalProcessActi
         this.name = name
     }
     
-    def static SfdcApprovalProcessFinalRejectionAction レコードロック(){
-        return new SfdcApprovalProcessFinalRejectionAction("レコードのロック", "")
+    def String getType(){
+        return SfdcWorkflowType.convert(type)
     }
     
-    def static SfdcApprovalProcessFinalRejectionAction レコードロック解除(){
-        return new SfdcApprovalProcessFinalRejectionAction("レコードのロック解除", "")
+    def static SfdcApprovalProcessFinalRejectionAction lock(){
+        return new SfdcApprovalProcessFinalRejectionAction("lock", "")
+    }
+    
+    def static SfdcApprovalProcessFinalRejectionAction unlock(){
+        return new SfdcApprovalProcessFinalRejectionAction("unlock", "")
     }
 }

@@ -56,7 +56,7 @@ class SfdcApprovalProcess {
     }
     
     def List<SfdcApprovalProcessRequestAction> 申請時のアクションリスト(){
-        return [ SfdcApprovalProcessRequestAction.レコードロック() ]
+        return [ SfdcApprovalProcessRequestAction.lock() ]
         // FIXME 申請時のアクションのタグを調べて追加する
     }
     
@@ -65,12 +65,12 @@ class SfdcApprovalProcess {
     }
     
     def List<SfdcApprovalProcessFinalApprovalAction> 最終承認時のアクションリスト(){
-        SfdcApprovalProcessFinalApprovalAction lockAction = (xml.finalApprovalRecordLock == "true") ? SfdcApprovalProcessFinalApprovalAction.レコードロック() : SfdcApprovalProcessFinalApprovalAction.レコードロック解除()
+        SfdcApprovalProcessFinalApprovalAction lockAction = (xml.finalApprovalRecordLock == "true") ? SfdcApprovalProcessFinalApprovalAction.lock() : SfdcApprovalProcessFinalApprovalAction.unlock()
         return [ lockAction ] + xml.finalApprovalActions.action.collect{ new SfdcApprovalProcessFinalApprovalAction(it) }
     }
     
     def List<SfdcApprovalProcessFinalRejectionAction> 最終却下時のアクションリスト(){
-        SfdcApprovalProcessFinalRejectionAction lockAction = (xml.finalRejectionRecordLock == "true") ? SfdcApprovalProcessFinalRejectionAction.レコードロック() : SfdcApprovalProcessFinalRejectionAction.レコードロック解除()
+        SfdcApprovalProcessFinalRejectionAction lockAction = (xml.finalRejectionRecordLock == "true") ? SfdcApprovalProcessFinalRejectionAction.lock() : SfdcApprovalProcessFinalRejectionAction.unlock()
         return [ lockAction ] + xml.finalRejectionActions.action.collect{ new SfdcApprovalProcessFinalRejectionAction(it) }
     }
     
