@@ -2,8 +2,8 @@ package jp.nyasba.tool.docforce2.repository.sheet
 
 import jp.nyasba.tool.docforce2.domain.SfdcCustomObject
 import jp.nyasba.tool.docforce2.domain.field.SfdcField
-import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
 import jp.nyasba.tool.docforce2.repository.CellUtil
+import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
@@ -22,11 +22,11 @@ class CustomFiledSheetRepository {
         
         Sheet customFieldSheet = workbook.getSheet("カスタム項目")
         
-        writeRow(customFieldSheet, 1, customObject.NameField(), style)
+        writeRow(customFieldSheet, 2, customObject.NameField(), style)
         
         List<SfdcField> customFieldList = customObject.Fieldリスト()
         customFieldList.eachWithIndex {
-            f, i -> writeRow(customFieldSheet, i + 2, f, style)
+            f, i -> writeRow(customFieldSheet, i + 3, f, style)
         }
         
     }
