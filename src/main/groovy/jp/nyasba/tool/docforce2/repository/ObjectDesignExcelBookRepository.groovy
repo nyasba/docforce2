@@ -2,11 +2,8 @@ package jp.nyasba.tool.docforce2.repository
 
 import jp.nyasba.tool.docforce2.domain.SfdcCustomObject
 import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcess
-import jp.nyasba.tool.docforce2.repository.sheet.ApprovalProcessSheetRepository
-import jp.nyasba.tool.docforce2.repository.sheet.CustomFiledSheetRepository
-import jp.nyasba.tool.docforce2.repository.sheet.ObjectSheetRepository
-import jp.nyasba.tool.docforce2.repository.sheet.TitleSheetRepository
-import jp.nyasba.tool.docforce2.repository.sheet.ValidationSheetRepository
+import jp.nyasba.tool.docforce2.domain.workflow.SfdcWorkflow
+import jp.nyasba.tool.docforce2.repository.sheet.*
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
 
@@ -24,7 +21,8 @@ class ObjectDesignExcelBookRepository {
 
     def void save(
             SfdcCustomObject customObject,
-            List<SfdcApprovalProcess> approvalProcessList = Collections.emptyList()
+            List<SfdcApprovalProcess> approvalProcessList = Collections.emptyList(),
+            SfdcWorkflow workflow = new SfdcWorkflow()
     ){
 
         Path outputFile = outputFilePath(customObject)
@@ -37,6 +35,7 @@ class ObjectDesignExcelBookRepository {
         new CustomFiledSheetRepository().createSheet(workbook, customObject)
         new ValidationSheetRepository().createSheet(workbook, customObject)
         new ApprovalProcessSheetRepository().createSheets(workbook, approvalProcessList)
+        new WorkflowActionSheetRepository().createSheet(workbook, workflow)
 
         saveWorkbook(outputFile, workbook)
     }

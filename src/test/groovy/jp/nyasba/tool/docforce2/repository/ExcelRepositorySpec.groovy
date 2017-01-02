@@ -2,12 +2,11 @@ package jp.nyasba.tool.docforce2.repository
 
 import jp.nyasba.tool.docforce2.domain.SfdcCustomObject
 import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcess
+import jp.nyasba.tool.docforce2.domain.workflow.SfdcWorkflow
 import spock.lang.Specification
-import spock.lang.Unroll
 
 import java.nio.file.Files
 import java.nio.file.Paths
-
 
 class ExcelRepositorySpec extends Specification {
 
@@ -18,11 +17,12 @@ class ExcelRepositorySpec extends Specification {
 
             SfdcCustomObject object = createObject("Travel_Request__c.object")
             SfdcApprovalProcess ap1 = createApprovalProcess("Travel_Request__c.TravelRequestApprovalProcess.approvalProcess")
+            SfdcWorkflow workflow = createWorkflow("Travel_Request__c.workflow")
         
             def sut = new ObjectDesignExcelBookRepository()
 
         expect:
-            sut.save(object, [ap1])
+            sut.save(object, [ap1], workflow)
             assert Files.exists(output)
     }
     
@@ -32,10 +32,11 @@ class ExcelRepositorySpec extends Specification {
         Files.deleteIfExists(output)
 
         SfdcCustomObject object = createObject("HolidayRequest__c.object")
+        SfdcWorkflow workflow = createWorkflow("HolidayRequest__c.workflow")
         def sut = new ObjectDesignExcelBookRepository()
         
         expect:
-        sut.save(object)
+        sut.save(object, [], workflow)
         assert Files.exists(output)
     }
     
@@ -48,5 +49,10 @@ class ExcelRepositorySpec extends Specification {
         def xmlFile = ClassLoader.getSystemResource("approvalprocess/${fileName}")
         return new SfdcApprovalProcess(fileName, xmlFile.text)
     }
-
+    
+    private SfdcWorkflow createWorkflow(String fileName){
+        def xmlFile = ClassLoader.getSystemResource("workflow/${fileName}")
+        return new SfdcWorkflow(xmlFile.text)
+    }
+    
 }
