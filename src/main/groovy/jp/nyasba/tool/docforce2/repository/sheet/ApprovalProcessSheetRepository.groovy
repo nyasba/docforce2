@@ -34,6 +34,7 @@ class ApprovalProcessSheetRepository {
     def createSheet(Workbook workbook, SfdcApprovalProcess ap, int i){
         Sheet sheet = workbook.cloneSheet(workbook.getSheetIndex("承認プロセス"))
         workbook.setSheetName(workbook.getSheetIndex(sheet), "承認プロセス(${i+1})")
+        workbook.setSheetOrder("承認プロセス(${i+1})", i+5)
     
         int row = 1;
 
