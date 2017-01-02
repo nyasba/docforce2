@@ -1,7 +1,7 @@
 package jp.nyasba.tool.docforce2.repository.sheet
 
 import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcess
-import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcessRequestAction
+import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcessAction
 import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcessStep
 import jp.nyasba.tool.docforce2.repository.CellUtil
 import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
@@ -44,10 +44,14 @@ class ApprovalProcessSheetRepository {
         承認プロセス情報1行(sheet, row++, "承認ページ表示項目", ap.承認ページ表示項目())
     
         row++
-        row = 申請時のアクション(sheet, row++, ap.申請時のアクションリスト())
+        row = アクションリスト(sheet, row++, "申請時のアクション", ap.申請時のアクションリスト())
         
         row++
         row = 承認ステップ(sheet, row++, ap.承認ステップリスト())
+    
+        row++
+        row = アクションリスト(sheet, row++, "最終承認時のアクション", ap.最終承認時のアクションリスト())
+
         印刷設定(sheet)
     
     }
@@ -59,15 +63,15 @@ class ApprovalProcessSheetRepository {
         r.setHeightInPoints(RowHeightUtil.optimizedValue(value))
     }
     
-    def int 申請時のアクション(Sheet sheet, int row, List<SfdcApprovalProcessRequestAction> actionList){
-        CellUtil.setValueWithCreateRecord(sheet, row++, 0, "申請時のアクション", sectionTitle, 24 as float)
+    def int アクションリスト(Sheet sheet, int row, String sectionTile, List<SfdcApprovalProcessAction> actionList){
+        CellUtil.setValueWithCreateRecord(sheet, row++, 0, sectionTile, sectionTitle, 24 as float)
     
         CellUtil.setValueWithCreateRecord(sheet, row, 0, "種別", tableHeader)
         CellUtil.setValueAndCellsMerged(sheet, row, 1, 2, "説明", tableHeader)
         row++
         actionList.each {
             CellUtil.setValueWithCreateRecord(sheet, row, 0, it.type, normal)
-            CellUtil.setValueAndCellsMerged(sheet, row, 1, 2, it.description, normal)
+            CellUtil.setValueAndCellsMerged(sheet, row, 1, 2, it.name, normal)
             row++
         }
         return row

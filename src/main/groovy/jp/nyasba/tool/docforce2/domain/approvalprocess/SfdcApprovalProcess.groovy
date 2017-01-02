@@ -63,4 +63,10 @@ class SfdcApprovalProcess {
     def List<SfdcApprovalProcessStep> 承認ステップリスト(){
         return xml.approvalStep.collect{ new SfdcApprovalProcessStep(it) }
     }
+    
+    def List<SfdcApprovalProcessFinalApprovalAction> 最終承認時のアクションリスト(){
+        SfdcApprovalProcessFinalApprovalAction lockAction = (xml.finalApprovalRecordLock == "true") ? SfdcApprovalProcessFinalApprovalAction.レコードロック() : SfdcApprovalProcessFinalApprovalAction.レコードロック解除()
+        return [ lockAction ] + xml.finalApprovalActions.action.collect{ new SfdcApprovalProcessFinalApprovalAction(it) }
+    }
+    
 }
