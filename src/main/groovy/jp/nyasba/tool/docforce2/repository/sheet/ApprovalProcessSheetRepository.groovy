@@ -51,6 +51,8 @@ class ApprovalProcessSheetRepository {
     
         row++
         row = アクションリスト(sheet, row++, "最終承認時のアクション", ap.最終承認時のアクションリスト())
+        row++
+        row = アクションリスト(sheet, row++, "最終却下時のアクション", ap.最終却下時のアクションリスト())
 
         印刷設定(sheet)
     
