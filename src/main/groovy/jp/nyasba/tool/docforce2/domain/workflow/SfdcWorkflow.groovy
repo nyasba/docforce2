@@ -26,4 +26,11 @@ class SfdcWorkflow {
         return []
     }
     
+    def List<SfdcWorkflowMailAlert> メールアラートリスト(){
+        if(isExist) {
+            return xml.alerts.collect{ new SfdcWorkflowMailAlert(it) }
+        }
+        return []
+    }
+    
 }
