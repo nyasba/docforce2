@@ -7,7 +7,8 @@ import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFCellStyle
 import org.apache.poi.xssf.usermodel.XSSFColor
 
-import java.awt.Color
+import java.awt.*
+import java.util.List
 
 /**
  * CellStyleのビルダークラス
@@ -56,11 +57,16 @@ class CellStyleBuilder {
         return this
     }
 
+    public CellStyleBuilder 縦位置上(){
+        style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+        return this
+    }
+    
     public CellStyleBuilder 縦位置中央(){
         style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         return this
     }
-
+    
     public CellStyleBuilder 改行OK(){
         style.setWrapText(true)
         return this
@@ -79,6 +85,12 @@ class CellStyleBuilder {
     
     public CellStyleBuilder 見出し用背景塗りつぶし(){
         style.setFillForegroundColor(new XSSFColor(new Color(59, 104, 159)))
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND)
+        return this
+    }
+    
+    public CellStyleBuilder 見出し用背景塗りつぶし2(){
+        style.setFillForegroundColor(new XSSFColor(new Color(182, 221, 232)))
         style.setFillPattern(CellStyle.SOLID_FOREGROUND)
         return this
     }
