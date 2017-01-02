@@ -2,8 +2,8 @@ package jp.nyasba.tool.docforce2.repository.sheet
 
 import jp.nyasba.tool.docforce2.domain.SfdcCustomObject
 import jp.nyasba.tool.docforce2.domain.vallidation.SfdcValidation
-import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
 import jp.nyasba.tool.docforce2.repository.CellUtil
+import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
@@ -24,10 +24,10 @@ class ValidationSheetRepository {
         validationList.eachWithIndex {
             v, i ->
                 if(v.isActive()){
-                    writeRow(validationSheet, i+1, v, normal)
+                    writeRow(validationSheet, i+2, v, normal)
                 }
                 else {
-                    writeRow(validationSheet, i+1, v, inactive)
+                    writeRow(validationSheet, i+2, v, inactive)
                 }
         }
 

@@ -5,6 +5,10 @@ import org.apache.poi.ss.usermodel.Font
 import org.apache.poi.ss.usermodel.IndexedColors
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFCellStyle
+import org.apache.poi.xssf.usermodel.XSSFColor
+
+import java.awt.*
+import java.util.List
 
 /**
  * CellStyleのビルダークラス
@@ -12,21 +16,27 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle
 class CellStyleBuilder {
 
     private Workbook workbook;
-    private CellStyle style;
+    private XSSFCellStyle style;
 
     public CellStyleBuilder(Workbook workbook){
         this.workbook = workbook
-        style = workbook.createCellStyle()
+        style = workbook.createCellStyle() as XSSFCellStyle
     }
 
     public CellStyle build(){
         return style
     }
 
-    public CellStyleBuilder メイリオ(def point = 11){
+    public CellStyleBuilder メイリオ(int point = 11, List option = []){
         Font font = workbook.createFont()
         font.setFontName("メイリオ")
         font.setFontHeightInPoints(point as short)
+        if(option.contains("bold")){
+            font.setBold(true)
+        }
+        if(option.contains("white")){
+            font.setColor(IndexedColors.WHITE.index)
+        }
         style.setFont(font)
         return this
     }
@@ -47,11 +57,16 @@ class CellStyleBuilder {
         return this
     }
 
+    public CellStyleBuilder 縦位置上(){
+        style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+        return this
+    }
+    
     public CellStyleBuilder 縦位置中央(){
         style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         return this
     }
-
+    
     public CellStyleBuilder 改行OK(){
         style.setWrapText(true)
         return this
@@ -64,6 +79,18 @@ class CellStyleBuilder {
 
     public CellStyleBuilder 背景を網掛け(){
         style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index)
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND)
+        return this
+    }
+    
+    public CellStyleBuilder 見出し用背景塗りつぶし(){
+        style.setFillForegroundColor(new XSSFColor(new Color(59, 104, 159)))
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND)
+        return this
+    }
+    
+    public CellStyleBuilder 見出し用背景塗りつぶし2(){
+        style.setFillForegroundColor(new XSSFColor(new Color(182, 221, 232)))
         style.setFillPattern(CellStyle.SOLID_FOREGROUND)
         return this
     }

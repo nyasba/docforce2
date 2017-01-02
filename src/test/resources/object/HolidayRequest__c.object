@@ -177,6 +177,16 @@
         <externalId>false</externalId>
         <inlineHelpText>休暇する人を指定してください</inlineHelpText>
         <label>対象者</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>User.IsActive</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </filterItems>
+            <infoMessage>有効な人しか指定できません</infoMessage>
+            <isOptional>false</isOptional>
+        </lookupFilter>
         <referenceTo>User</referenceTo>
         <relationshipName>HolidayRequestTarget</relationshipName>
         <required>false</required>

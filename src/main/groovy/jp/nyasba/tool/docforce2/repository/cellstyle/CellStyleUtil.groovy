@@ -57,4 +57,33 @@ class CellStyleUtil {
                 .build()
     }
     
+    def static CellStyle sectionTitle(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ(12, ["bold"])
+                .縦位置中央()
+                .罫線なし()
+                .改行NG()
+                .build()
+    }
+    
+    def static CellStyle tableHeader(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ(11, ["white"])
+                .縦位置中央()
+                .罫線で囲む()
+                .改行OK()
+                .見出し用背景塗りつぶし()
+                .build()
+    }
+    
+    def static CellStyle tableHeader2(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ(11)
+                .縦位置上()
+                .罫線で囲む()
+                .改行OK()
+                .見出し用背景塗りつぶし2()
+                .build()
+    }
+    
 }
