@@ -11,7 +11,7 @@ import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 
 /**
- * Excelの「入力規則」シートを作成するためのRepository
+ * Excelの「ワークフローアクション」シートを作成するためのRepository
  */
 class WorkflowActionSheetRepository {
     

@@ -12,7 +12,7 @@ class SfdcOperation {
      * @return ドキュメント出力用の文字列
      */
     public static String convert(def operation){
-        switch (operation){
+        switch (operation as String){
             case "equals" : return "="
             case "greaterThan" : return ">"
         }
