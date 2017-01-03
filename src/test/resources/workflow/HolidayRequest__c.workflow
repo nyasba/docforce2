@@ -12,7 +12,33 @@
     <rules>
         <fullName>休暇期間が5日を超える</fullName>
         <actions>
-            <name>ConfirmCheck</name>
+            <name>ConfirmCheck4</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>ConfirmCheck5</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>HolidayRequest__c.NumberOfHoliday__c</field>
+            <operation>greaterThan</operation>
+            <value>5</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>休暇期間が5日を超える2</fullName>
+        <actions>
+            <name>ConfirmCheck1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>ConfirmCheck2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>ConfirmCheck3</name>
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>

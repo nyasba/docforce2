@@ -33,4 +33,10 @@ class SfdcWorkflow {
         return []
     }
     
+    def List<SfdcWorkflowRule> ワークフロールールリスト(){
+        if(isExist) {
+            return xml.rules.collect{ new SfdcWorkflowRule(it) }
+        }
+        return []
+    }
 }
