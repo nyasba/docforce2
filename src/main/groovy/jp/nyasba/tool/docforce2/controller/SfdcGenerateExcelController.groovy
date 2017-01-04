@@ -15,17 +15,6 @@ class SfdcGenerateExcelController {
     
     static void main(String[] args){
 
-//        def jsonPath = Paths.get("C:/dev/sfdc/docforce2/input/setting.json")
-//        def json = new JsonSlurper().parseText(jsonPath.text)
-//        // サンプル
-//        String inputBaseDir = json.inputBaseDir
-//        if(!inputBaseDir.endsWith("/")){
-//            inputBaseDir = inputBaseDir + "/"
-//        }
-//        String inputObjectPath = inputBaseDir + json.resource.object
-//        String inputApprovalProcessPath1 = inputBaseDir + json.resource.approvalProcesses.get(0)
-//        String inputWorkflowPath = inputBaseDir + json.resource.workflow
-        
         def yamlPath = Paths.get("C:/dev/sfdc/docforce2/input/setting.yml")
         def yaml = new Yaml().load(yamlPath.text)
 
