@@ -19,6 +19,7 @@ class SfdcGenerateExcelController {
         def yaml = new Yaml().load(yamlPath.text)
 
         String inputBaseDir = yaml.inputBaseDir
+        String outputDir = yaml.outputDir
         if(!inputBaseDir.endsWith("/")){
             inputBaseDir = inputBaseDir + "/"
         }
@@ -31,7 +32,7 @@ class SfdcGenerateExcelController {
         SfdcApprovalProcess approvalProcess1 = createApprovalProcess(inputApprovalProcessPath1)
         SfdcWorkflow workflow = createWorkflow(inputWorkflowPath)
         
-        new ObjectDesignExcelBookRepository().save(object, [approvalProcess1], workflow)
+        new ObjectDesignExcelBookRepository(outputDir).save(object, [approvalProcess1], workflow)
     }
     
     private static SfdcCustomObject createObject(String inputPath){

@@ -1,4 +1,5 @@
 inputBaseDir : "C:/dev/sfdc/docforce2/src/test/resources/"
+outputDir : "C:/dev/sfdc/docforce2/output/test"
 resource :
       object : "object/Travel_Request__c.object"
       approvalProcesses :

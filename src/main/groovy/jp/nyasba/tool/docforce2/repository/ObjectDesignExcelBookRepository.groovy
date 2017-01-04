@@ -18,6 +18,15 @@ class ObjectDesignExcelBookRepository {
 
     private static Path TEMPLATE = Paths.get(ClassLoader.getSystemResource("template/オブジェクト定義書.xlsx").toURI())
 
+    private String outputDir
+    
+    public ObjectDesignExcelBookRepository(){
+        this.outputDir = "output"
+    }
+    
+    public ObjectDesignExcelBookRepository(String outputDir){
+        this.outputDir = outputDir.endsWith("/") ? outputDir : outputDir + "/"
+    }
 
     def void save(
             SfdcCustomObject customObject,
@@ -41,9 +50,8 @@ class ObjectDesignExcelBookRepository {
         saveWorkbook(outputFile, workbook)
     }
 
-    private static Path outputFilePath(SfdcCustomObject customObject){
-        def outputPath = (System.properties.get("outputPath")) ?: "output"
-        return Paths.get("${outputPath}/オブジェクト定義書_${customObject.表示ラベル()}.xlsx")
+    private Path outputFilePath(SfdcCustomObject customObject){
+        return Paths.get("${this.outputDir}/オブジェクト定義書_${customObject.表示ラベル()}.xlsx")
     }
 
     private static void saveWorkbook(Path filePath, Workbook workbook){
