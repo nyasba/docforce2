@@ -1,0 +1,10 @@
+{
+  "inputBaseDir" : "C:\/dev\/sfdc\/docforce2\/src\/test\/resources\/",
+  "resource" : {
+    "object" : "object\/Travel_Request__c.object",
+    "approvalProcesses" : [
+      "approvalProcess\/Travel_Request__c.TravelRequestApprovalProcess.approvalProcess"
+    ],
+    "workflow" : "workflow\/Travel_Request__c.workflow"
+  }
+}

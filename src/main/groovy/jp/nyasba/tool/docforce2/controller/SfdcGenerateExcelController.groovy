@@ -1,5 +1,6 @@
 package jp.nyasba.tool.docforce2.controller
 
+import groovy.json.JsonSlurper
 import jp.nyasba.tool.docforce2.domain.SfdcCustomObject
 import jp.nyasba.tool.docforce2.domain.approvalprocess.SfdcApprovalProcess
 import jp.nyasba.tool.docforce2.domain.workflow.SfdcWorkflow
@@ -13,11 +14,18 @@ import java.nio.file.Paths
 class SfdcGenerateExcelController {
     
     static void main(String[] args){
+
+        def jsonPath = Paths.get("C:/dev/sfdc/docforce2/input/setting.json")
+        def json = new JsonSlurper().parseText(jsonPath.text)
+
         // サンプル
-        String inputBaseDir = "C:/dev/sfdc/docforce2/src/test/resources/"
-        String inputObjectPath = inputBaseDir + "object/Travel_Request__c.object"
-        String inputApprovalProcessPath1 = inputBaseDir + "approvalProcess/Travel_Request__c.TravelRequestApprovalProcess.approvalProcess"
-        String inputWorkflowPath = inputBaseDir + "workflow/Travel_Request__c.workflow"
+        String inputBaseDir = json.inputBaseDir
+        if(!inputBaseDir.endsWith("/")){
+            inputBaseDir = inputBaseDir + "/"
+        }
+        String inputObjectPath = inputBaseDir + json.resource.object
+        String inputApprovalProcessPath1 = inputBaseDir + json.resource.approvalProcesses.get(0)
+        String inputWorkflowPath = inputBaseDir + json.resource.workflow
         
         SfdcCustomObject object = createObject(inputObjectPath)
         SfdcApprovalProcess approvalProcess1 = createApprovalProcess(inputApprovalProcessPath1)
