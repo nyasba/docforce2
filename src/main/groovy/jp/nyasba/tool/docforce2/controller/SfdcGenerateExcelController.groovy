@@ -6,22 +6,26 @@ import jp.nyasba.tool.docforce2.domain.workflow.SfdcWorkflow
 import jp.nyasba.tool.docforce2.repository.ObjectDesignExcelBookRepository
 import org.yaml.snakeyaml.Yaml
 
-import java.nio.file.Paths
-
 /**
  * エクセルを作成するためのエンドポイントとなるController
  */
 class SfdcGenerateExcelController {
     
     static void main(String[] args){
+        
+        assert args.size() == 1 : "wrong argument: conf_file "
 
-        def yamlPath = Paths.get("C:/dev/sfdc/docforce2/input/setting.yml")
-        def yaml = new Yaml().load(yamlPath.text)
+        def yaml = readConfigYaml(args[0])
 
         String inputBaseDir = getInputBaseDir(yaml)
         String outputDir = getOutputDir(yaml)
     
         yaml.resources.collect{ createResouceDocument(inputBaseDir, outputDir, it) }
+    }
+    
+    private static def readConfigYaml(String yamlPath){
+        File yamlFile = getPathIfExists(yamlPath)
+        return new Yaml().load(yamlFile.text)
     }
     
     private static String getInputBaseDir(def yaml){
