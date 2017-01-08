@@ -33,7 +33,7 @@ class SfdcGenerateExcelController {
     }
     
     private static String getOutputDir(def yaml){
-        return yaml.outputDir
+        return yaml.outputDir ?: "output"
     }
     
     private static void createResouceDocument(String inputBaseDir, String outputDir, def resourceYaml){
