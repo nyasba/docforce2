@@ -1,5 +1,5 @@
-inputBaseDir : "C:/dev/sfdc/docforce2/src/test/resources/"
-#outputDir : "C:/dev/sfdc/docforce2/output/test"
+inputBaseDir : "src/test/resources/"
+#outputDir : "output/test"
 resources :
     - resource :
           object : "object/Travel_Request__c.object"
