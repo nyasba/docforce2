@@ -1,7 +1,12 @@
 inputBaseDir : "C:/dev/sfdc/docforce2/src/test/resources/"
 outputDir : "C:/dev/sfdc/docforce2/output/test"
-resource :
-      object : "object/Travel_Request__c.object"
-      approvalProcesses :
-        - "approvalProcess/Travel_Request__c.TravelRequestApprovalProcess.approvalProcess"
-      workflow : "workflow/Travel_Request__c.workflow"
+resources :
+    - resource :
+          object : "object/Travel_Request__c.object"
+          approvalProcesses :
+            - "approvalProcess/Travel_Request__c.TravelRequestApprovalProcess.approvalProcess"
+          workflow : "workflow/Travel_Request__c.workflow"
+    - resource :
+          object : "object/HolidayRequest__c.object"
+          approvalProcesses :
+          workflow : "workflow/HolidayRequest__c.workflow"
