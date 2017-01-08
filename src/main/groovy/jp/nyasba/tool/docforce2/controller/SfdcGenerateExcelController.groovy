@@ -47,9 +47,8 @@ class SfdcGenerateExcelController {
     
     private static SfdcCustomObject createObject(String inputBaseDir, String param){
         assert param : "'object' parameter is not set"
-        String inputObjectPath = inputBaseDir + param
-        def xmlFile = Paths.get(inputObjectPath)
-        def fileName = inputObjectPath.find('[^/]*$')
+        def xmlFile = getPathIfExists(inputBaseDir + param)
+        def fileName = xmlFile.getName().find('[^/]*$')
         return new SfdcCustomObject(fileName, xmlFile.text)
     }
     
@@ -58,19 +57,22 @@ class SfdcGenerateExcelController {
             return []
         }
         return paramList.collect{
-            String inputApprovalProcessPath = inputBaseDir + it
-            def xmlFile = Paths.get(inputApprovalProcessPath)
-            def fileName = inputApprovalProcessPath.find('[^/]*$')
+            def xmlFile = getPathIfExists(inputBaseDir + it)
+            def fileName = xmlFile.getName().find('[^/]*$')
             return new SfdcApprovalProcess(fileName, xmlFile.text)
         }
     }
     
     private static SfdcWorkflow createWorkflow(String inputBaseDir, String param){
         assert param : "'workflow' parameter is not set"
-        String inputWorkflowPath = inputBaseDir + param
-        def xmlFile = Paths.get(inputWorkflowPath)
-        def fileName = inputWorkflowPath.find('[^/]*$')
+        def xmlFile = getPathIfExists(inputBaseDir + param)
         return new SfdcWorkflow(xmlFile.text)
     }
     
+    
+    private static File getPathIfExists(String stringPath){
+        File file = new File(stringPath)
+        assert file.exists() : "file not found : ${file.getPath()}"
+        return file
+    }
 }
