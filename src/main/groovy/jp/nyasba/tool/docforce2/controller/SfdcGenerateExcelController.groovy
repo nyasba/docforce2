@@ -25,6 +25,7 @@ class SfdcGenerateExcelController {
     }
     
     private static String getInputBaseDir(def yaml){
+        assert yaml.inputBaseDir : "'inputBaseDir' parameter is not set"
         String inputBaseDir = yaml.inputBaseDir
         if(!inputBaseDir.endsWith("/")){
             inputBaseDir = inputBaseDir + "/"
@@ -45,7 +46,7 @@ class SfdcGenerateExcelController {
     }
     
     private static SfdcCustomObject createObject(String inputBaseDir, String param){
-        assert param != null
+        assert param : "'object' parameter is not set"
         String inputObjectPath = inputBaseDir + param
         def xmlFile = Paths.get(inputObjectPath)
         def fileName = inputObjectPath.find('[^/]*$')
@@ -65,7 +66,7 @@ class SfdcGenerateExcelController {
     }
     
     private static SfdcWorkflow createWorkflow(String inputBaseDir, String param){
-        assert param != null
+        assert param : "'workflow' parameter is not set"
         String inputWorkflowPath = inputBaseDir + param
         def xmlFile = Paths.get(inputWorkflowPath)
         def fileName = inputWorkflowPath.find('[^/]*$')
