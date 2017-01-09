@@ -38,8 +38,8 @@ class SfdcApprovalProcess {
     def String レコードの編集(){
         switch (xml.recordEditability){
             case "AdminOnly" : return "システム管理者のみ"
-            // TODO 「承認者＋管理者」用の変換を追加する
-            default: return ""
+            case "AdminOrCurrentApprover" : return "システム管理者と承認者"
+            default: return xml.recordEditability
         }
     }
     
