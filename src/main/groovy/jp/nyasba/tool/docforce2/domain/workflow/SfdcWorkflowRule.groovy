@@ -68,12 +68,7 @@ class SfdcWorkflowRule {
         }
         
         public String getType(){
-            switch (type){
-                case "FieldUpdate" : return "項目自動更新"
-                case "Alert" : return "メールアラート"
-                case "OutboundMessage" : return "アウトバウンドメッセージ"
-                default: return type
-            }
+            return SfdcWorkflowType.convert(this.type)
         }
     }
 }
