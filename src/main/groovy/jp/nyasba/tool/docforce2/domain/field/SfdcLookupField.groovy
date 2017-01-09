@@ -1,7 +1,7 @@
 package jp.nyasba.tool.docforce2.domain.field
 
 import groovy.util.slurpersupport.GPathResult
-import jp.nyasba.tool.docforce2.domain.operator.SfdcOperation
+import jp.nyasba.tool.docforce2.domain.condition.SfdcOperation
 
 /**
  * 参照関係フィールド

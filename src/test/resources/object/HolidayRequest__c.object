@@ -82,6 +82,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Confirm__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>要確認</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>DetailReason__c</fullName>
         <externalId>false</externalId>
         <label>詳細理由</label>

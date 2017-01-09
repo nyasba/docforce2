@@ -1,5 +1,6 @@
 package jp.nyasba.tool.docforce2.domain.approvalprocess
 
+import jp.nyasba.tool.docforce2.domain.condition.SfdcCriteria
 import jp.nyasba.tool.docforce2.domain.folder.SfdcFolder
 
 /**
@@ -29,17 +30,14 @@ class SfdcApprovalProcess {
     }
     
     def String 開始条件(){
-        if(xml.entryCriteria.formula != null){
-            return xml.entryCriteria.formula
-        }
-        return ""
+        return SfdcCriteria.getCriteria(xml.entryCriteria)
     }
     
     def String レコードの編集(){
         switch (xml.recordEditability){
             case "AdminOnly" : return "システム管理者のみ"
-            // TODO 「承認者＋管理者」用の変換を追加する
-            default: return ""
+            case "AdminOrCurrentApprover" : return "システム管理者と承認者"
+            default: return xml.recordEditability
         }
     }
     
@@ -56,8 +54,11 @@ class SfdcApprovalProcess {
     }
     
     def List<SfdcApprovalProcessRequestAction> 申請時のアクションリスト(){
-        return [ SfdcApprovalProcessRequestAction.lock() ]
-        // FIXME 申請時のアクションのタグを調べて追加する
+        return [ SfdcApprovalProcessRequestAction.lock() ] + xml.initialSubmissionActions.action.collect { new SfdcApprovalProcessRequestAction(it) }
+    }
+    
+    def List<SfdcApprovalProcessRecallAction> 取消時のアクションリスト(){
+        return [ SfdcApprovalProcessRecallAction.unlock() ] + xml.recallActions.action.collect { new SfdcApprovalProcessRecallAction(it) }
     }
     
     def List<SfdcApprovalProcessStep> 承認ステップリスト(){

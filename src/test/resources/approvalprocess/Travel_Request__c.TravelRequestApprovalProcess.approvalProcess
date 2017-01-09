@@ -15,6 +15,12 @@
     </approvalPageFields>
     <approvalStep>
         <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>MemoUpdate</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
         <assignedApprover>
             <approver>
                 <type>userHierarchyField</type>
@@ -26,6 +32,24 @@
     <description>あ</description>
     <emailTemplate>unfiled$public/ApprovalRequestMail</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <booleanFilter>( 1 OR 2 ) AND 3</booleanFilter>
+        <criteriaItems>
+            <field>Travel_Request__c.Airfare__c</field>
+            <operation>greaterOrEqual</operation>
+            <value>300</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Travel_Request__c.Purpose_of_Travel__c</field>
+            <operation>contains</operation>
+            <value>接待</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Travel_Request__c.DaysOfTravel__c</field>
+            <operation>notEqual</operation>
+            <value>1</value>
+        </criteriaItems>
+    </entryCriteria>
     <finalApprovalActions>
         <action>
             <name>ApprovedDataTimeUpdate</name>
@@ -35,14 +59,36 @@
             <name>ApprovedMailAlert</name>
             <type>Alert</type>
         </action>
+        <action>
+            <name>StatusUpdateApproved</name>
+            <type>FieldUpdate</type>
+        </action>
     </finalApprovalActions>
     <finalApprovalRecordLock>true</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>StatusUpdateRejected</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>StatusUpdateRequesting</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
     <label>高額出張時承認プロセス</label>
     <nextAutomatedApprover>
         <useApproverFieldOfRecordOwner>false</useApproverFieldOfRecordOwner>
         <userHierarchyField>Manager</userHierarchyField>
     </nextAutomatedApprover>
-    <recordEditability>AdminOnly</recordEditability>
+    <recallActions>
+        <action>
+            <name>StatusUpdateCanceled</name>
+            <type>FieldUpdate</type>
+        </action>
+    </recallActions>
+    <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

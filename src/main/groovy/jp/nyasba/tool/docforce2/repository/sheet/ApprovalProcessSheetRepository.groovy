@@ -47,15 +47,19 @@ class ApprovalProcessSheetRepository {
         承認プロセス情報1行(sheet, row++, "承認割り当てメールテンプレート", ap.承認割り当てメールテンプレート())
         承認プロセス情報1行(sheet, row++, "承認ページ表示項目", ap.承認ページ表示項目())
     
-        row += 2
-        row = アクションリスト(sheet, row++, "申請時のアクション", ap.申請時のアクションリスト())
+        row++
+        CellUtil.setValueWithCreateRecord(sheet, row++, 0, "申請・取消時", sectionTitle, 24 as float)
+        row = アクションリスト(sheet, row, "申請時のアクション", ap.申請時のアクションリスト())
+        row = アクションリスト(sheet, row, "取消時のアクション", ap.取消時のアクションリスト())
         
         row++
-        row = 承認ステップ(sheet, row++, ap.承認ステップリスト())
+        CellUtil.setValueWithCreateRecord(sheet, row++, 0, "承認ステップ", sectionTitle, 24 as float)
+        row = 承認ステップ(sheet, row, ap.承認ステップリスト())
     
         row++
-        row = アクションリスト(sheet, row++, "最終承認時のアクション", ap.最終承認時のアクションリスト())
-        row = アクションリスト(sheet, row++, "最終却下時のアクション", ap.最終却下時のアクションリスト())
+        CellUtil.setValueWithCreateRecord(sheet, row++, 0, "最終承認・却下時", sectionTitle, 24 as float)
+        row = アクションリスト(sheet, row, "最終承認時のアクション", ap.最終承認時のアクションリスト())
+        row = アクションリスト(sheet, row, "最終却下時のアクション", ap.最終却下時のアクションリスト())
 
         印刷設定(sheet)
     
@@ -69,6 +73,11 @@ class ApprovalProcessSheetRepository {
     }
     
     def int アクションリスト(Sheet sheet, int row, String actionLabel, List<SfdcApprovalProcessAction> actionList){
+
+        if(actionList.size() == 0){
+            return row
+        }
+
         int originalRow = row
         CellUtil.setValueWithCreateRecord(sheet, row, 1, actionLabel, tableHeader2)
         CellUtil.setValue(sheet, row, 2, "種別", tableHeader2)
@@ -85,8 +94,6 @@ class ApprovalProcessSheetRepository {
     }
     
     def int 承認ステップ(Sheet sheet, int row, List<SfdcApprovalProcessStep> stepList){
-        CellUtil.setValueWithCreateRecord(sheet, row++, 0, "承認ステップ", sectionTitle, 24 as float)
-    
         sheet.createRow(row)
         CellUtil.setValueAndCellsMerged(sheet, row, 0, 1, "ラベル", tableHeader)
         CellUtil.setValue(sheet, row, 2, "API参照名", tableHeader)
@@ -112,6 +119,8 @@ class ApprovalProcessSheetRepository {
                     RowHeightUtil.optimizedValue(it.説明 as String),
             ].max())
             row++
+            row = アクションリスト(sheet, row, "承認時のアクション", it.承認時のアクションリスト)
+            row = アクションリスト(sheet, row, "却下時のアクション", it.却下時のアクションリスト)
         }
         return row
     }

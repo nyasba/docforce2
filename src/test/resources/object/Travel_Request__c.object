@@ -101,6 +101,15 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Memo__c</fullName>
+        <externalId>false</externalId>
+        <label>メモ</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Miscellaneous__c</fullName>
         <externalId>false</externalId>
         <label>雑費</label>
@@ -119,6 +128,37 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>ステータス</label>
+        <picklist>
+            <picklistValues>
+                <fullName>申請前</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>申請中</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>承認完了</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>却下</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>取消</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
     </fields>
     <fields>
         <fullName>Total__c</fullName>

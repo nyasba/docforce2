@@ -1,4 +1,4 @@
-package jp.nyasba.tool.docforce2.domain.operator
+package jp.nyasba.tool.docforce2.domain.condition
 
 /**
  * メタデータに含まれるOperationを扱うドメインクラス
@@ -14,9 +14,13 @@ class SfdcOperation {
     public static String convert(def operation){
         switch (operation as String){
             case "equals" : return "="
+            case "notEqual" : return "!="
             case "greaterThan" : return ">"
+            case "greaterOrEqual" : return ">="
+            case "lessThan" : return "<"
+            case "lessOrEqual" : return "<="
         }
-        return ""
+        return operation as String
     }
     
 }
