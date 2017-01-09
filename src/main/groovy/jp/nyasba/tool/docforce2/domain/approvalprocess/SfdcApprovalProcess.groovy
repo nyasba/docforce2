@@ -57,6 +57,10 @@ class SfdcApprovalProcess {
         return [ SfdcApprovalProcessRequestAction.lock() ] + xml.initialSubmissionActions.action.collect { new SfdcApprovalProcessRequestAction(it) }
     }
     
+    def List<SfdcApprovalProcessRecallAction> 取消時のアクションリスト(){
+        return [ SfdcApprovalProcessRecallAction.unlock() ] + xml.recallActions.action.collect { new SfdcApprovalProcessRecallAction(it) }
+    }
+    
     def List<SfdcApprovalProcessStep> 承認ステップリスト(){
         return xml.approvalStep.collect{ new SfdcApprovalProcessStep(it) }
     }

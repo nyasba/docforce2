@@ -49,6 +49,7 @@ class ApprovalProcessSheetRepository {
     
         row += 2
         row = アクションリスト(sheet, row++, "申請時のアクション", ap.申請時のアクションリスト())
+        row = アクションリスト(sheet, row++, "取消時のアクション", ap.取消時のアクションリスト())
         
         row++
         row = 承認ステップ(sheet, row++, ap.承認ステップリスト())
