@@ -2,7 +2,7 @@ package jp.nyasba.tool.docforce2.domain.workflow
 
 import groovy.util.slurpersupport.NodeChild
 import groovy.util.slurpersupport.NodeChildren
-import jp.nyasba.tool.docforce2.domain.operator.SfdcOperation
+import jp.nyasba.tool.docforce2.domain.condition.SfdcOperation
 
 /**
  * ワークフロールールドメイン

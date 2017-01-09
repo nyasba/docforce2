@@ -1,5 +1,6 @@
 package jp.nyasba.tool.docforce2.domain.approvalprocess
 
+import jp.nyasba.tool.docforce2.domain.condition.SfdcCriteria
 import jp.nyasba.tool.docforce2.domain.folder.SfdcFolder
 
 /**
@@ -29,10 +30,7 @@ class SfdcApprovalProcess {
     }
     
     def String 開始条件(){
-        if(xml.entryCriteria.formula != null){
-            return xml.entryCriteria.formula
-        }
-        return ""
+        return SfdcCriteria.getCriteria(xml.entryCriteria)
     }
     
     def String レコードの編集(){

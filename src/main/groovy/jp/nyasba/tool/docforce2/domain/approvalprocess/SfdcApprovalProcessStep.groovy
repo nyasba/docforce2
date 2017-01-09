@@ -1,7 +1,7 @@
 package jp.nyasba.tool.docforce2.domain.approvalprocess
 
 import groovy.util.slurpersupport.NodeChild
-import jp.nyasba.tool.docforce2.domain.operator.SfdcOperation
+import jp.nyasba.tool.docforce2.domain.condition.SfdcCriteria
 
 /**
  * ApprovalProcessメタデータ中の「承認ステップ」の読み取り結果
@@ -19,7 +19,7 @@ class SfdcApprovalProcessStep {
     def SfdcApprovalProcessStep(NodeChild xml){
         this.ラベル = xml.label
         this.API参照名 = xml.getProperty("name")
-        this.条件 = xml.entryCriteria.criteriaItems.collect{ "${it?.field} ${SfdcOperation.convert(it?.operation)} ${it?.value}"}.join("\n")
+        this.条件 = SfdcCriteria.getCriteria(xml.entryCriteria)
         this.承認割り当て先 = xml.assignedApprover.approver.collect{ convert承認割り当て先(it) }.join("\n")
         this.代理承認 = (xml.allowDelegate == "true") ? "○" : "×"
         this.却下時の処理 = xml.rejectBehavior.type.collect{ convert却下時の処理(it) }.join("\n")

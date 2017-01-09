@@ -1,4 +1,4 @@
-package jp.nyasba.tool.docforce2.domain.operator
+package jp.nyasba.tool.docforce2.domain.condition
 
 /**
  * メタデータに含まれるOperationを扱うドメインクラス
