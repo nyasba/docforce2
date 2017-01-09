@@ -54,8 +54,7 @@ class SfdcApprovalProcess {
     }
     
     def List<SfdcApprovalProcessRequestAction> 申請時のアクションリスト(){
-        return [ SfdcApprovalProcessRequestAction.lock() ]
-        // FIXME 申請時のアクションのタグを調べて追加する
+        return [ SfdcApprovalProcessRequestAction.lock() ] + xml.initialSubmissionActions.action.collect { new SfdcApprovalProcessRequestAction(it) }
     }
     
     def List<SfdcApprovalProcessStep> 承認ステップリスト(){
