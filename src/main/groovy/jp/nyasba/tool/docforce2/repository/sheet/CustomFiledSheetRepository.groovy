@@ -35,7 +35,7 @@ class CustomFiledSheetRepository {
         println customField.dump()
         int i = 0
         sheet.createRow(rowNumber)
-        CellUtil.setValue(sheet, rowNumber, i++, rowNumber, style[0])
+        CellUtil.setValue(sheet, rowNumber, i++, rowNumber-1, style[0])
         CellUtil.setValue(sheet, rowNumber, i++, customField.ラベル(), style[0])
         CellUtil.setValue(sheet, rowNumber, i++, customField.API参照名(), style[0])
         CellUtil.setValue(sheet, rowNumber, i++, customField.タイプ(), style[0])
