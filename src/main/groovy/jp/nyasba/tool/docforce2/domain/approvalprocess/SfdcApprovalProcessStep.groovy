@@ -27,10 +27,19 @@ class SfdcApprovalProcessStep {
     }
     
     def String convert承認割り当て先(NodeChild approver){
-        if( approver.getProperty('name').toString() == "" ){
-            return "${approver.type}"
+        if(approver.getProperty('name') == "" ){
+            return "${convert承認割り当て先Type(approver.type)}"
         }
-        return "${approver.type}:${approver.getProperty('name')}"
+        return "${convert承認割り当て先Type(approver.type)}:${approver.getProperty('name')}"
+    }
+    
+    def String convert承認割り当て先Type(def type){
+        switch (type as String){
+            case "userHierarchyField" : return "マネージャ"
+            case "relatedUserField" : return "関連ユーザ"
+            case "queue" : return "キュー"
+            default: return type as String
+        }
     }
     
     def String convert却下時の処理(NodeChild type){
