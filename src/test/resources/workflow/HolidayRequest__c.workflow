@@ -10,35 +10,34 @@
         <protected>false</protected>
     </fieldUpdates>
     <rules>
-        <fullName>休暇期間が5日を超える</fullName>
+        <fullName>休暇が1日以下</fullName>
         <actions>
-            <name>ConfirmCheck4</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ConfirmCheck5</name>
+            <name>ConfirmCheck</name>
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
         <criteriaItems>
             <field>HolidayRequest__c.NumberOfHoliday__c</field>
-            <operation>greaterThan</operation>
-            <value>5</value>
+            <operation>lessOrEqual</operation>
+            <value>1</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <criteriaItems>
+            <field>HolidayRequest__c.AttentionCheck__c</field>
+            <operation>notEqual</operation>
+            <value>True</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>休暇期間が5日を超える2</fullName>
+        <fullName>休暇タイプチェック</fullName>
+        <active>false</active>
+        <formula>ISPICKVAL( HolidayType__c , &apos;休暇タイプの１つ&apos;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>休暇期間が5日を超える</fullName>
         <actions>
-            <name>ConfirmCheck1</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ConfirmCheck2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ConfirmCheck3</name>
+            <name>ConfirmCheck</name>
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
