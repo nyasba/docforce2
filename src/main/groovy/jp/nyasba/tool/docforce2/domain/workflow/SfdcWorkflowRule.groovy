@@ -16,13 +16,19 @@ class SfdcWorkflowRule {
     
     public SfdcWorkflowRule(NodeChild xml){
         this.ラベル = xml.fullName
-        this.評価条件 = criteriaItemsToString(xml.criteriaItems)
+        this.評価条件 = conditionToString(xml.formula, xml.criteriaItems)
         this.トリガータイプ = convertTriggerType(xml.triggerType)
         this.アクションリスト = xml.actions.collect{ new Action(it.type, it.name) }
     }
     
-    private String criteriaItemsToString(NodeChildren criteriaItems){
-        // TODO 数式のバリエーションや複数時のAND/ORなどへの対応が未
+    private String conditionToString(def formula, NodeChildren criteriaItems){
+
+        // 数式の場合は数式をそのまま返却する
+        if (formula != null){
+            return formula
+        }
+        
+        // 評価項目指定の場合 TODO 複数時のAND/ORなどへの対応が未
         return criteriaItems.collect{ NodeChild item ->
             "${criteriaField(item)} ${criteriaOperation(item)} ${criteriaValue(item)}"
         }.join("\n")
@@ -45,7 +51,9 @@ class SfdcWorkflowRule {
     
     private String convertTriggerType(def xmlValue){
         switch (xmlValue as String){
-            case "onCreateOrTriggeringUpdate" : return "作成/更新時"
+            case "onCreateOnly" : return "作成時のみ"
+            case "onAllChanges" : return "作成時/全ての更新時"
+            case "onCreateOrTriggeringUpdate" : return "作成時/基準を満たすように更新時"
             default: return xmlValue as String
         }
     }
