@@ -15,6 +15,8 @@ class SfdcApprovalProcessStep {
     def 代理承認
     def 却下時の処理
     def 説明
+    List<SfdcApprovalProcessStepAction> 承認時のアクションリスト
+    List<SfdcApprovalProcessStepAction> 却下時のアクションリスト
     
     def SfdcApprovalProcessStep(NodeChild xml){
         this.ラベル = xml.label
@@ -24,6 +26,8 @@ class SfdcApprovalProcessStep {
         this.代理承認 = (xml.allowDelegate == "true") ? "○" : "×"
         this.却下時の処理 = xml.rejectBehavior.type.collect{ convert却下時の処理(it) }.join("\n")
         this.説明 = xml.description
+        this.承認時のアクションリスト = xml.approvalActions.action.collect { new SfdcApprovalProcessStepAction(it) }
+        this.却下時のアクションリスト = xml.rejectionActions.action.collect { new SfdcApprovalProcessStepAction(it) }
     }
     
     def String convert承認割り当て先(NodeChild approver){
