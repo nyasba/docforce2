@@ -26,6 +26,19 @@ class WorkflowRuleSheetRepository {
     }
     
     private int ワークフロールール1件(Sheet sheet, int row, SfdcWorkflowRule rule, int index, CellStyle style){
+        
+        // アクションが紐づいていないパタン
+        if(rule.アクションリスト.size() == 0){
+            sheet.createRow(row)
+            CellUtil.setValue(sheet, row, 0, index, style)
+            CellUtil.setValue(sheet, row, 1, rule.ラベル, style)
+            CellUtil.setValue(sheet, row, 2, rule.評価条件, style)
+            CellUtil.setValue(sheet, row, 3, rule.トリガータイプ, style)
+            CellUtil.setValue(sheet, row, 4, "なし", style)
+            CellUtil.setValue(sheet, row, 5, "", style)
+            return row+1
+        }
+    
         int i = 0
         rule.アクションリスト.each{
             sheet.createRow(row+i)
