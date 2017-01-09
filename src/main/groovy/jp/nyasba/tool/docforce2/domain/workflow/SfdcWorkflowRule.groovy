@@ -24,7 +24,7 @@ class SfdcWorkflowRule {
     private String conditionToString(def formula, NodeChildren criteriaItems){
 
         // 数式の場合は数式をそのまま返却する
-        if (formula != null){
+        if (formula != ""){
             return formula
         }
         
