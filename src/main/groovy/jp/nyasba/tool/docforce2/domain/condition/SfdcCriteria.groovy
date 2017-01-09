@@ -18,7 +18,7 @@ class SfdcCriteria {
         
         // 項目指定の場合
         List<String> conditionList = xml.criteriaItems.collect {
-            "${it?.field} ${SfdcOperation.convert(it?.operation)} ${it?.value}"
+            "${it?.field} ${SfdcOperation.convert(it?.operation)} ${returnNullIfBrank(it?.value)}"
         }
         
         if(xml.booleanFilter == ""){
@@ -50,6 +50,13 @@ class SfdcCriteria {
         
         return result
         
+    }
+    
+    private static String returnNullIfBrank(def value){
+        if(value == null || value == ""){
+            return "null"
+        }
+        return value as String;
     }
     
 }
