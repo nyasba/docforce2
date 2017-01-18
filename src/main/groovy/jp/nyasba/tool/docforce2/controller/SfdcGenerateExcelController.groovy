@@ -45,8 +45,9 @@ class SfdcGenerateExcelController {
         SfdcCustomObject object = createObject(inputBaseDir, resourceYaml.resource?.object)
         List<SfdcApprovalProcess> approvalProcessList = createApprovalProcessList(inputBaseDir, resourceYaml.resource?.approvalProcesses)
         SfdcWorkflow workflow = createWorkflow(inputBaseDir, resourceYaml.resource?.workflow)
+        String author = resourceYaml.resource?.author
     
-        new ObjectDesignExcelBookRepository(outputDir).save(object, approvalProcessList, workflow)
+        new ObjectDesignExcelBookRepository(outputDir, author).save(object, approvalProcessList, workflow)
     }
     
     private static SfdcCustomObject createObject(String inputBaseDir, String param){
