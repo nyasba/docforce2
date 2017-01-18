@@ -19,7 +19,7 @@ class ExcelRepositorySpec extends Specification {
             SfdcApprovalProcess ap1 = createApprovalProcess("Travel_Request__c.TravelRequestApprovalProcess.approvalProcess")
             SfdcWorkflow workflow = createWorkflow("Travel_Request__c.workflow")
         
-            def sut = new ObjectDesignExcelBookRepository()
+            def sut = new ObjectDesignExcelBookRepository("output/", "test")
 
         expect:
             sut.save(object, [ap1], workflow)
@@ -33,7 +33,7 @@ class ExcelRepositorySpec extends Specification {
 
         SfdcCustomObject object = createObject("HolidayRequest__c.object")
         SfdcWorkflow workflow = createWorkflow("HolidayRequest__c.workflow")
-        def sut = new ObjectDesignExcelBookRepository()
+        def sut = new ObjectDesignExcelBookRepository("output/", "test")
         
         expect:
         sut.save(object, [], workflow)
