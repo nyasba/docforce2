@@ -19,13 +19,11 @@ class ObjectDesignExcelBookRepository {
     private static Path TEMPLATE = Paths.get(ClassLoader.getSystemResource("template/オブジェクト定義書.xlsx").toURI())
 
     private String outputDir
+    private String author
     
-    public ObjectDesignExcelBookRepository(){
-        this.outputDir = "output"
-    }
-    
-    public ObjectDesignExcelBookRepository(String outputDir){
+    public ObjectDesignExcelBookRepository(String outputDir = "output/", String author = "aaa"){
         this.outputDir = outputDir.endsWith("/") ? outputDir : outputDir + "/"
+        this.author = author
     }
 
     def void save(
@@ -38,8 +36,8 @@ class ObjectDesignExcelBookRepository {
         Files.deleteIfExists(outputFile)
 
         Workbook workbook = WorkbookFactory.create(TEMPLATE.toFile())
-
-        new TitleSheetRepository().createSheet(workbook,customObject)
+    
+        new TitleSheetRepository(author).createSheet(workbook,customObject)
         new ObjectSheetRepository().createSheet(workbook, customObject)
         new CustomFiledSheetRepository().createSheet(workbook, customObject)
         new ValidationSheetRepository().createSheet(workbook, customObject)
