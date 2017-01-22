@@ -5,6 +5,7 @@ import jp.nyasba.tool.docforce2.domain.vallidation.SfdcValidation
 import jp.nyasba.tool.docforce2.repository.CellUtil
 import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
 import org.apache.poi.ss.usermodel.CellStyle
+import org.apache.poi.ss.usermodel.PrintSetup
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 
@@ -31,6 +32,7 @@ class ValidationSheetRepository {
                 }
         }
 
+        印刷設定(validationSheet)
     }
 
     private writeRow(Sheet sheet, int rowNumber, SfdcValidation validation, CellStyle style){
@@ -42,5 +44,11 @@ class ValidationSheetRepository {
         CellUtil.setValue(sheet, rowNumber, 3, validation.数式(), style)
         CellUtil.setValue(sheet, rowNumber, 4, validation.説明(), style)
     }
-
+    
+    def void 印刷設定(Sheet sheet){
+        PrintSetup printSetup = sheet.getPrintSetup()
+        printSetup.setPaperSize(PrintSetup.A4_PAPERSIZE)
+        printSetup.setLandscape(true) //横向き
+        printSetup.setScale(60 as short)
+    }
 }
