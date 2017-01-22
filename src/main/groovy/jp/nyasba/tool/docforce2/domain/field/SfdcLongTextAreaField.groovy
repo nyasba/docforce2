@@ -3,7 +3,7 @@ package jp.nyasba.tool.docforce2.domain.field
 import groovy.util.slurpersupport.GPathResult
 
 /**
- * テキストエリアフィールド
+ * ロングテキストエリアフィールド
  */
 class SfdcLongTextAreaField implements SfdcField {
 
