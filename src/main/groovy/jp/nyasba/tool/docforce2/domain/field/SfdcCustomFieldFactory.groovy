@@ -14,6 +14,7 @@ class SfdcCustomFieldFactory {
             case "DateTime": return new SfdcDateTimeField(fieldXml)
             case "Lookup" : return new SfdcLookupField(fieldXml)
             case "Number": return new SfdcNumberField(fieldXml)
+            case "Phone": return new SfdcPhoneField(fieldXml)
             case "Picklist":
             case "MultiselectPicklist": return new SfdcPicklistField(fieldXml)
             case "TextArea": return new SfdcLongTextAreaField(fieldXml)
