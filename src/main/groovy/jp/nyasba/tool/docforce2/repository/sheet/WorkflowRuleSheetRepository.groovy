@@ -5,6 +5,7 @@ import jp.nyasba.tool.docforce2.domain.workflow.SfdcWorkflowRule
 import jp.nyasba.tool.docforce2.repository.CellUtil
 import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
 import org.apache.poi.ss.usermodel.CellStyle
+import org.apache.poi.ss.usermodel.PrintSetup
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.util.CellRangeAddress
@@ -23,6 +24,8 @@ class WorkflowRuleSheetRepository {
         workflow.ワークフロールールリスト().eachWithIndex{ SfdcWorkflowRule rule, int i ->
             row = ワークフロールール1件(sheet, row, rule, i+1, normal)
         }
+    
+        印刷設定(sheet)
     }
     
     private int ワークフロールール1件(Sheet sheet, int row, SfdcWorkflowRule rule, int index, CellStyle style){
@@ -54,5 +57,12 @@ class WorkflowRuleSheetRepository {
             (0..3).each { sheet.addMergedRegion(new CellRangeAddress(row, row+i-1, it, it)) }
         }
         return row+i
+    }
+    
+    def void 印刷設定(Sheet sheet){
+        PrintSetup printSetup = sheet.getPrintSetup()
+        printSetup.setPaperSize(PrintSetup.A4_PAPERSIZE)
+        printSetup.setLandscape(true) //横向き
+        printSetup.setScale(60 as short)
     }
 }
