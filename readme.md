@@ -57,6 +57,7 @@ Excelの出力先ディレクトリを指定する。設定しなかった場合
 | object          | オブジェクトのメタデータファイルのinputBaseDirからのパス |
 | approvalProcess | 承認プロセスのメタデータファイルのinputBaseDirからのパス。複数指定可 |
 | workflow        | ワークフローのメタデータファイルのinputBaseDirからのパス |
+| author       　 | タイトルシートに記入される作成者(会社名など) |
 
 
 #### サンプル
@@ -70,8 +71,10 @@ resources :
           approvalProcesses :
             - "approvalProcess/Travel_Request__c.TravelRequestApprovalProcess.approvalProcess"
           workflow : "workflow/Travel_Request__c.workflow"
+          author: "nyasba"
     - resource :
           object : "object/HolidayRequest__c.object"
           approvalProcesses :
           workflow : "workflow/HolidayRequest__c.workflow"
+          author: "nyasba"
 ```
