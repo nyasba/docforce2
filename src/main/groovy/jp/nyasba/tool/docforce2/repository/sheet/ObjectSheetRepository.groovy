@@ -5,11 +5,12 @@ import jp.nyasba.tool.docforce2.domain.recordtype.SfdcRecordType
 import jp.nyasba.tool.docforce2.repository.CellUtil
 import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
 import org.apache.poi.ss.usermodel.CellStyle
+import org.apache.poi.ss.usermodel.PrintSetup
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 
 /**
- * Excelの「表紙」シートを作成するためのRepository
+ * Excelの「オブジェクト情報」シートを作成するためのRepository
  */
 class ObjectSheetRepository {
 
@@ -36,6 +37,8 @@ class ObjectSheetRepository {
                 }
         }
     
+        印刷設定(objectSheet)
+    
     }
     
     private writeRow(Sheet sheet, int rowNumber, SfdcRecordType recordType, CellStyle style){
@@ -45,5 +48,11 @@ class ObjectSheetRepository {
         CellUtil.setValue(sheet, rowNumber, 1, recordType.API参照名(),  style)
         CellUtil.setValue(sheet, rowNumber, 2, recordType.説明(), style)
     }
-
+    
+    def void 印刷設定(Sheet sheet){
+        PrintSetup printSetup = sheet.getPrintSetup()
+        printSetup.setPaperSize(PrintSetup.A4_PAPERSIZE);
+        printSetup.setLandscape(true);//横向き
+        printSetup.setScale(80 as short)
+    }
 }

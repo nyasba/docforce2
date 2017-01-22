@@ -5,10 +5,7 @@ import jp.nyasba.tool.docforce2.domain.workflow.SfdcWorkflowFieldUpdate
 import jp.nyasba.tool.docforce2.domain.workflow.SfdcWorkflowMailAlert
 import jp.nyasba.tool.docforce2.repository.CellUtil
 import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
-import org.apache.poi.ss.usermodel.CellStyle
-import org.apache.poi.ss.usermodel.Row
-import org.apache.poi.ss.usermodel.Sheet
-import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.ss.usermodel.*
 
 /**
  * Excelの「ワークフローアクション」シートを作成するためのRepository
@@ -31,7 +28,8 @@ class WorkflowActionSheetRepository {
         
         row = 項目自動更新(sheet, row, workflow.項目自動更新リスト()) + 2
         row = メールアラート(sheet, row, workflow.メールアラートリスト()) + 2
-
+    
+        印刷設定(sheet)
     }
     
     private int 項目自動更新(Sheet sheet, int row, List<SfdcWorkflowFieldUpdate> list){
@@ -110,5 +108,12 @@ class WorkflowActionSheetRepository {
             row++
         }
         return row
+    }
+    
+    def void 印刷設定(Sheet sheet){
+        PrintSetup printSetup = sheet.getPrintSetup()
+        printSetup.setPaperSize(PrintSetup.A4_PAPERSIZE)
+        printSetup.setLandscape(true) //横向き
+        printSetup.setScale(60 as short)
     }
 }

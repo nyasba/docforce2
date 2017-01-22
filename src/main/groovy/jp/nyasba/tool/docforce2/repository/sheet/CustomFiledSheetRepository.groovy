@@ -5,6 +5,7 @@ import jp.nyasba.tool.docforce2.domain.field.SfdcField
 import jp.nyasba.tool.docforce2.repository.CellUtil
 import jp.nyasba.tool.docforce2.repository.cellstyle.CellStyleUtil
 import org.apache.poi.ss.usermodel.CellStyle
+import org.apache.poi.ss.usermodel.PrintSetup
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 
@@ -29,6 +30,7 @@ class CustomFiledSheetRepository {
             f, i -> writeRow(customFieldSheet, i + 3, f, style)
         }
         
+        印刷設定(customFieldSheet)
     }
     
     private writeRow(Sheet sheet, int rowNumber, SfdcField customField, CellStyle... style) {
@@ -46,6 +48,13 @@ class CustomFiledSheetRepository {
         CellUtil.setValue(sheet, rowNumber, i++, customField.必須(), style[1])
         CellUtil.setValue(sheet, rowNumber, i++, customField.外部ID(), style[1])
         CellUtil.setValue(sheet, rowNumber, i++, customField.説明(), style[0])
+    }
+    
+    def void 印刷設定(Sheet sheet){
+        PrintSetup printSetup = sheet.getPrintSetup()
+        printSetup.setPaperSize(PrintSetup.A4_PAPERSIZE)
+        printSetup.setLandscape(true) //横向き
+        printSetup.setScale(50 as short)
     }
     
 }
