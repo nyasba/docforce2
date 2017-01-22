@@ -16,6 +16,7 @@ class ApprovalProcessSheetRepository {
     
     CellStyle sectionTitle;
     CellStyle normal;
+    CellStyle normalWithTopBold;
     CellStyle tableHeader;
     CellStyle tableHeader2;
 
@@ -24,6 +25,7 @@ class ApprovalProcessSheetRepository {
         // 利用するスタイルを作成
         sectionTitle = CellStyleUtil.sectionTitle(workbook)
         normal = CellStyleUtil.normal(workbook)
+        normalWithTopBold = CellStyleUtil.normalWithTopBold(workbook)
         tableHeader = CellStyleUtil.tableHeader(workbook)
         tableHeader2 = CellStyleUtil.tableHeader2(workbook)
     
@@ -72,24 +74,24 @@ class ApprovalProcessSheetRepository {
         r.setHeightInPoints(RowHeightUtil.optimizedValue(value))
     }
     
-    def int アクションリスト(Sheet sheet, int row, String actionLabel, List<SfdcApprovalProcessAction> actionList){
+    def int アクションリスト(Sheet sheet, int row, String actionLabel, List<SfdcApprovalProcessAction> actionList, int colposition = 1, int merged = 2){
 
         if(actionList.size() == 0){
             return row
         }
 
         int originalRow = row
-        CellUtil.setValueWithCreateRecord(sheet, row, 1, actionLabel, tableHeader2)
-        CellUtil.setValue(sheet, row, 2, "種別", tableHeader2)
-        CellUtil.setValueAndCellsMerged(sheet, row, 3, 4, "名前", tableHeader2)
+        CellUtil.setValueWithCreateRecord(sheet, row, colposition, actionLabel, tableHeader2)
+        CellUtil.setValue(sheet, row, colposition+1, "種別", tableHeader2)
+        CellUtil.setValueAndCellsMerged(sheet, row, colposition+2, colposition+2+merged-1, "名前", tableHeader2)
         row++
         actionList.each {
-            CellUtil.setValueWithCreateRecord(sheet, row, 1, "", tableHeader2)
-            CellUtil.setValue(sheet, row, 2, it.type, normal)
-            CellUtil.setValueAndCellsMerged(sheet, row, 3, 4, it.name, normal)
+            CellUtil.setValueWithCreateRecord(sheet, row, colposition, "", tableHeader2)
+            CellUtil.setValue(sheet, row, colposition+1, it.type, normal)
+            CellUtil.setValueAndCellsMerged(sheet, row, colposition+2, colposition+2+merged-1, it.name, normal)
             row++
         }
-        sheet.addMergedRegion(new CellRangeAddress(originalRow, row -1 , 1, 1))
+        sheet.addMergedRegion(new CellRangeAddress(originalRow, row -1 , colposition, colposition))
         return row
     }
     
@@ -104,14 +106,16 @@ class ApprovalProcessSheetRepository {
         CellUtil.setValue(sheet, row, 7, "説明", tableHeader)
         row++
         stepList.each {
+            def originalRow = row
             Row r = sheet.createRow(row)
-            CellUtil.setValueAndCellsMerged(sheet, row, 0, 1, it.ラベル, normal)
-            CellUtil.setValue(sheet, row, 2, it.API参照名, normal)
-            CellUtil.setValue(sheet, row, 3, it.条件, normal)
-            CellUtil.setValue(sheet, row, 4, it.承認割り当て先, normal)
-            CellUtil.setValue(sheet, row, 5, it.代理承認, normal)
-            CellUtil.setValue(sheet, row, 6, it.却下時の処理, normal)
-            CellUtil.setValue(sheet, row, 7, it.説明, normal)
+            CellUtil.setValue(sheet, row, 0, it.ラベル, normalWithTopBold)
+            CellUtil.setStyle(sheet, row, 1, normalWithTopBold)
+            CellUtil.setValue(sheet, row, 2, it.API参照名, normalWithTopBold)
+            CellUtil.setValue(sheet, row, 3, it.条件, normalWithTopBold)
+            CellUtil.setValue(sheet, row, 4, it.承認割り当て先, normalWithTopBold)
+            CellUtil.setValue(sheet, row, 5, it.代理承認, normalWithTopBold)
+            CellUtil.setValue(sheet, row, 6, it.却下時の処理, normalWithTopBold)
+            CellUtil.setValue(sheet, row, 7, it.説明, normalWithTopBold)
             r.setHeightInPoints( [
                     RowHeightUtil.optimizedValue(it.条件),
                     RowHeightUtil.optimizedValue(it.承認割り当て先),
@@ -119,8 +123,17 @@ class ApprovalProcessSheetRepository {
                     RowHeightUtil.optimizedValue(it.説明 as String),
             ].max())
             row++
-            row = アクションリスト(sheet, row, "承認時のアクション", it.承認時のアクションリスト)
-            row = アクションリスト(sheet, row, "却下時のアクション", it.却下時のアクションリスト)
+            row = アクションリスト(sheet, row, "承認時のアクション", it.承認時のアクションリスト,2,4)
+            row = アクションリスト(sheet, row, "却下時のアクション", it.却下時のアクションリスト,2,4)
+            
+            if(originalRow < row-1 ) {
+                // アクションリスト行のマージ対象セルにセルスタイルを適用。
+                (originalRow + 1 .. row - 1).each {
+                    CellUtil.setStyle(sheet, it, 0, normal)
+                    CellUtil.setStyle(sheet, it, 1, normal)
+                }
+                sheet.addMergedRegion(new CellRangeAddress(originalRow, row - 1, 0, 1))
+            }
         }
         return row
     }
