@@ -86,4 +86,13 @@ class CellStyleUtil {
                 .build()
     }
     
+    def static CellStyle normalWithTopBold(Workbook workbook) {
+        return new CellStyleBuilder(workbook)
+                .メイリオ()
+                .縦位置中央()
+                .上部だけ太い罫線で囲む()
+                .改行OK()
+                .build()
+    }
+    
 }

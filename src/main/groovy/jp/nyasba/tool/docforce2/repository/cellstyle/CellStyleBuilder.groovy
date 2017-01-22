@@ -48,7 +48,15 @@ class CellStyleBuilder {
         style.setBorderRight(XSSFCellStyle.BORDER_THIN)
         return this
     }
-
+    
+    public CellStyleBuilder 上部だけ太い罫線で囲む(){
+        style.setBorderTop(XSSFCellStyle.BORDER_MEDIUM)
+        style.setBorderBottom(XSSFCellStyle.BORDER_THIN)
+        style.setBorderLeft(XSSFCellStyle.BORDER_THIN)
+        style.setBorderRight(XSSFCellStyle.BORDER_THIN)
+        return this
+    }
+    
     public CellStyleBuilder 罫線なし(){
         style.setBorderTop(XSSFCellStyle.BORDER_NONE)
         style.setBorderBottom(XSSFCellStyle.BORDER_NONE)
