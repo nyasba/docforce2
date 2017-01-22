@@ -36,10 +36,11 @@ class ValidationSheetRepository {
     private writeRow(Sheet sheet, int rowNumber, SfdcValidation validation, CellStyle style){
         println validation.dump()
         sheet.createRow(rowNumber)
-        CellUtil.setValue(sheet, rowNumber, 0, rowNumber, style)
+        CellUtil.setValue(sheet, rowNumber, 0, rowNumber-1, style)
         CellUtil.setValue(sheet, rowNumber, 1, validation.名前(), style)
         CellUtil.setValue(sheet, rowNumber, 2, validation.エラーメッセージ(), style)
         CellUtil.setValue(sheet, rowNumber, 3, validation.数式(), style)
+        CellUtil.setValue(sheet, rowNumber, 4, validation.説明(), style)
     }
 
 }

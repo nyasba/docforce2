@@ -214,6 +214,7 @@
     <validationRules>
         <fullName>TravelDateCheck</fullName>
         <active>true</active>
+        <description>説明</description>
         <errorConditionFormula>TravelStartDate__c &gt;  TravelEndDate__c</errorConditionFormula>
         <errorMessage>出張開始日と終了日が逆転しています</errorMessage>
     </validationRules>

@@ -1,7 +1,6 @@
 package jp.nyasba.tool.docforce2.domain.vallidation
 
 import groovy.util.slurpersupport.GPathResult
-import jp.nyasba.tool.docforce2.domain.field.SfdcField
 
 /**
  * 入力規則
@@ -21,7 +20,11 @@ class SfdcValidation {
     def boolean isActive(){
         return fieldXml.active == "true"
     }
-
+    
+    def String 説明(){
+        return fieldXml.description
+    }
+    
     def String エラーメッセージ(){
         return fieldXml.errorMessage
     }
