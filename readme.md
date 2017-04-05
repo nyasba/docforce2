@@ -1,7 +1,5 @@
 
-## docforce2　
-
-[![Build Status](https://travis-ci.org/nyasba/docforce2.svg?branch=master)](https://travis-ci.org/nyasba/docforce2)
+## docforce2　[![Build Status](https://travis-ci.org/nyasba/docforce2.svg?branch=master)](https://travis-ci.org/nyasba/docforce2)
 
 salesforceのオブジェクト構成をExcel設計書に出力するツール。
 
